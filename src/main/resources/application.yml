@@ -1,0 +1,22 @@
+# 开发环境配置
+server:
+  # 服务端口
+  port: 12345
+  servlet:
+    # 项目contextPath
+    context-path: /
+  tomcat:
+    # tomcat的URI编码
+    uri-encoding: UTF-8
+    # tomcat最大线程数，默认为200
+    max-threads: 20
+    # Tomcat启动初始化的线程数，默认值25
+    min-spare-threads: 20
+    
+# Spring配置
+spring:
+  # 模板引擎
+  thymeleaf:
+    encoding: utf-8
+    # 禁用缓存
+    cache: false
