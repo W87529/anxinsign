@@ -13,7 +13,7 @@ import anxinsign.constant.SystemConst;
 import anxinsign.util.CommonUtil;
 
 public class HttpConnector {
-    public static String JKS_PATH = "C:\\Users\\W\\Documents\\WeChat Files\\wxid_4i6ihugqxut721\\FileStorage\\File\\2020-11\\AnXinSign_CertTool\\java\\anxinsign.jks";
+    public static String JKS_PATH = "C:\\AnXinSign_CertTool\\java\\anxinsign.jks";
     public static String JKS_PWD = "123456";
     public static String ALIAS = "anxinsign";
 
