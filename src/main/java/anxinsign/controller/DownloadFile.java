@@ -18,13 +18,13 @@ import cfca.trustsign.common.util.CommonUtil;
 public class DownloadFile {
 	@ResponseBody
 	@PostMapping(value = "/downloadFile")
-    public static void downloadFile(String contractNo) throws IOException {
+    public static String downloadFile(String contractNo) throws IOException {
 		HttpConnector httpConnector = new HttpConnector();
         httpConnector.init();
 
         byte[] fileBtye = httpConnector.getFile("platId/" + Request.PLAT_ID + "/contractNo/" + contractNo + "/downloading");
         if (CommonUtil.isEmpty(fileBtye)) {
-            return;
+            return "{\"errorCode\":\"50030301\",\"errorMessage\":\"ID为B3F40CDD852438CCE05312016B0A71AC的用户合同编号为"+contractNo+"的合同信息不存在\"}";
         }
 
         String filePath = "C:/file";
@@ -33,5 +33,6 @@ public class DownloadFile {
             Files.createDirectory(path);
         }
         Files.write(Paths.get(filePath + File.separator + contractNo + ".pdf"), fileBtye);
+		return "{\"head\":{\"retCode\":\"60000000\",\"retMessage\":\"OK\"},\"filePath\":\""+filePath + File.separator + contractNo + ".pdf\"}";
     }
 }

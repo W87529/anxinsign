@@ -15,13 +15,13 @@ import anxinsign.util.TimeUtil;
 public class DownloadFiles {
 	@ResponseBody
 	@PostMapping(value = "/downloadFiles")
-    public static void downloadFiles(String contractNos) {
+    public static String downloadFiles(String contractNos) {
         HttpConnector httpConnector = new HttpConnector();
         httpConnector.init();
 
         byte[] fileBtye = httpConnector.getFile("platId/" + Request.PLAT_ID + "/contractNos/" + contractNos + "/batchDownloading");
         if (fileBtye == null || fileBtye.length == 0) {
-            return;
+            return "{\"errorCode\":\"50030301\",\"errorMessage\":\"ID为B3F40CDD852438CCE05312016B0A71AC的用户合同编号为"+contractNos+"的合同信息不存在\"}";
         }
 
         try {
@@ -39,5 +39,6 @@ public class DownloadFiles {
         } catch (Exception e) {
             e.printStackTrace();
         }
+		return "{\"head\":{\"retCode\":\"60000000\",\"retMessage\":\"OK\"},\"filePath\":\"C:/file" + File.separator + TimeUtil.getCurrentTime(TimeUtil.FORMAT_14) + ".zip\"}";
     }
 }
