@@ -30,9 +30,9 @@ public class DownloadFile {
         String filePath = "D:\\FTP\\Customers\\"+fnumber+"\\contract";
         Path path = Paths.get(filePath);
         if (!Files.exists(path)) {
-            Files.createDirectory(path);
+            Files.createDirectories(path);
         }
-        Files.write(Paths.get(filePath + File.separator + contractNo + ".pdf"), fileBtye);
-		return "{\"head\":{\"retCode\":\"60000000\",\"retMessage\":\"OK\"},\"filePath\":\"http://110.16.84.155:8090/customers/"+fnumber + File.separator + "contract" + File.separator + contractNo + ".pdf\"}";
+        Files.write(Paths.get(filePath + "/" + contractNo + ".pdf"), fileBtye);
+		return "{\"head\":{\"retCode\":\"60000000\",\"retMessage\":\"OK\"},\"filePath\":\"http://110.16.84.155:8090/customers/"+fnumber + "/" + "contract" + "/" + contractNo + ".pdf\"}";
     }
 }

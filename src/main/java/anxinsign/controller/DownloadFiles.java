@@ -31,7 +31,7 @@ public class DownloadFiles {
             if (!dir.exists()) {
                 dir.mkdirs();
             }
-            File file = new File(filePath + File.separator + name + ".zip");
+            File file = new File(filePath + "/" + name + ".zip");
             try (FileOutputStream fos = new FileOutputStream(file)) {
                 fos.write(fileBtye);
             } catch (Exception e) {
@@ -40,6 +40,6 @@ public class DownloadFiles {
         } catch (Exception e) {
             e.printStackTrace();
         }
-		return "{\"head\":{\"retCode\":\"60000000\",\"retMessage\":\"OK\"},\"filePath\":\"C:/file" + File.separator + name + ".zip\"}";
+		return "{\"head\":{\"retCode\":\"60000000\",\"retMessage\":\"OK\"},\"filePath\":\"C:/file" + "/" + name + ".zip\"}";
     }
 }
