@@ -35,12 +35,12 @@ public class TxCode3411 {
 
         JsonObjectMapper jsonObjectMapper = new JsonObjectMapper();
         String req = jsonObjectMapper.writeValueAsString(tx3411ReqVO);
-        System.out.println("req:" + req);
+        System.out.println("3411-req:" + req);
 
         String txCode = "3411";
         String signature = SecurityUtil.p7SignMessageDetach(HttpConnector.JKS_PATH, HttpConnector.JKS_PWD, HttpConnector.ALIAS, req);
         String res = httpConnector.post("platId/" + Request.PLAT_ID + "/txCode/" + txCode + "/transaction", req, signature);
-        System.out.println("res:" + res);
+        System.out.println("3411-res:" + res);
 		return res;
     }
 }

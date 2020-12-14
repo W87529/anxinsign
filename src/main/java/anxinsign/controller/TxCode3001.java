@@ -43,12 +43,12 @@ public class TxCode3001 {
 
         JsonObjectMapper jsonObjectMapper = new JsonObjectMapper();
         String req = jsonObjectMapper.writeValueAsString(tx3001ReqVO);
-        System.out.println("req:" + req);
+        System.out.println("3001-req:" + req);
 
         String txCode = "3001";
         String signature = SecurityUtil.p7SignMessageDetach(HttpConnector.JKS_PATH, HttpConnector.JKS_PWD, HttpConnector.ALIAS, req);
         String res = httpConnector.post("platId/" + Request.PLAT_ID + "/txCode/" + txCode + "/transaction", req, signature);
-        System.out.println("res:" + res);
+        System.out.println("3001-res:" + res);
         return res;
     }
 }

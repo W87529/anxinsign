@@ -119,14 +119,14 @@ public class TxCode3203 {
 
         JsonObjectMapper jsonObjectMapper = new JsonObjectMapper();
         String req = jsonObjectMapper.writeValueAsString(tx3203ReqVO);
-        System.out.println("req:" + req);
+        System.out.println("3203-req:" + req);
 
         File file = new File(json.getString("contractFile"));
 
         String txCode = "3203";
         String signature = SecurityUtil.p7SignMessageDetach(HttpConnector.JKS_PATH, HttpConnector.JKS_PWD, HttpConnector.ALIAS, req);
         String res = httpConnector.post("platId/" + Request.PLAT_ID + "/txCode/" + txCode + "/transaction", req, signature, file);
-        System.out.println("res:" + res);
+        System.out.println("3203-res:" + res);
 		return res;
     }
 }

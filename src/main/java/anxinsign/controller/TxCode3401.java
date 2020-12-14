@@ -75,7 +75,7 @@ public class TxCode3401 {
 
         JsonObjectMapper jsonObjectMapper = new JsonObjectMapper();
         String req = jsonObjectMapper.writeValueAsString(tx3401ReqVO);
-        System.out.println("req:" + req);
+        System.out.println("3401-req:" + req);
 
         if (CommonUtil.isEmpty(req)) {
             System.out.println("req is null");
@@ -85,7 +85,7 @@ public class TxCode3401 {
         String txCode = "3401";
         String signature = SecurityUtil.p7SignMessageDetach(HttpConnector.JKS_PATH, HttpConnector.JKS_PWD, HttpConnector.ALIAS, req);
         String res = httpConnector.post("platId/" + Request.PLAT_ID + "/txCode/" + txCode + "/transaction", req, signature);
-        System.out.println("res:" + res);
+        System.out.println("3401-res:" + res);
 
         Tx3401ResVO tx3401ResVO = jsonObjectMapper.readValue(res, Tx3401ResVO.class);
         if (tx3401ResVO.getLocalSign() != null) {
