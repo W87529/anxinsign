@@ -15,7 +15,7 @@ import anxinsign.util.TimeUtil;
 public class DownloadFiles {
 	@ResponseBody
 	@PostMapping(value = "/downloadFiles")
-    public static String downloadFiles(String contractNos) {
+    public static String downloadFiles(String contractNos,String fnumber) {
         HttpConnector httpConnector = new HttpConnector();
         httpConnector.init();
 
@@ -23,10 +23,15 @@ public class DownloadFiles {
         if (fileBtye == null || fileBtye.length == 0) {
             return "{\"errorCode\":\"50030301\",\"errorMessage\":\"ID为B3F40CDD852438CCE05312016B0A71AC的用户合同编号为"+contractNos+"的合同信息不存在\"}";
         }
-
-        String name = TimeUtil.getCurrentTime(TimeUtil.FORMAT_14);
+        String name = null;
+        String[] temp = contractNos.split("@");
+        if(temp.length<=2) {
+        	name = contractNos;
+        }else {
+        	name = temp[0]+"@---@"+temp[temp.length-1];
+        }
         try {
-        	String filePath = "C:/file";
+        	String filePath = "D:\\FTP\\Customers\\"+fnumber;
             File dir = new File(filePath);
             if (!dir.exists()) {
                 dir.mkdirs();
@@ -40,6 +45,6 @@ public class DownloadFiles {
         } catch (Exception e) {
             e.printStackTrace();
         }
-		return "{\"head\":{\"retCode\":\"60000000\",\"retMessage\":\"OK\"},\"filePath\":\"C:/file" + "/" + name + ".zip\"}";
+		return "{\"head\":{\"retCode\":\"60000000\",\"retMessage\":\"OK\"},\"filePath\":\"http://110.16.84.155:8090/customers/"+fnumber+"/" + name + ".zip\"}";
     }
 }
