@@ -24,7 +24,7 @@ import cfca.trustsign.common.util.CommonUtil;
 public class DownloadFile {
 	@ResponseBody
 	@PostMapping(value = "/downloadFile")
-    public static String downloadFile(String contractNo,String fnumber) throws IOException {
+    public static String downloadFile(String contractNo,String fnumber,int isJPG) throws IOException {
 		HttpConnector httpConnector = new HttpConnector();
         httpConnector.init();
 
@@ -41,17 +41,19 @@ public class DownloadFile {
         Files.write(Paths.get(filePath + "/" + contractNo + ".pdf"), fileBtye);
         StringBuffer jpgPath = new StringBuffer();
         jpgPath.append(",\"jpgPaths\":[");
-        try (PDDocument document = PDDocument.load(fileBtye)) {
-            PDFRenderer renderer = new PDFRenderer(document);
-            for (int i = 0; i < document.getNumberOfPages(); ++i) {
-                BufferedImage bufferedImage = renderer.renderImageWithDPI(i, 100);
-                ByteArrayOutputStream out = new ByteArrayOutputStream();
-                ImageIO.write(bufferedImage, "jpg", out);
-                Files.write(Paths.get(filePath + "/" + contractNo + "-" + (i+1) + ".jpg"), out.toByteArray());
-                if(i!=0) {
-                	jpgPath.append(",");
+        if(isJPG==1) {
+        	try (PDDocument document = PDDocument.load(fileBtye)) {
+                PDFRenderer renderer = new PDFRenderer(document);
+                for (int i = 0; i < document.getNumberOfPages(); ++i) {
+                    BufferedImage bufferedImage = renderer.renderImageWithDPI(i, 100);
+                    ByteArrayOutputStream out = new ByteArrayOutputStream();
+                    ImageIO.write(bufferedImage, "jpg", out);
+                    Files.write(Paths.get(filePath + "/" + contractNo + "-" + (i+1) + ".jpg"), out.toByteArray());
+                    if(i!=0) {
+                    	jpgPath.append(",");
+                    }
+                    jpgPath.append("{\"jpgPath\":\"http://110.16.84.155:8090/customers/" + fnumber + "/" + "contract" + "/" + contractNo + "-" + (i+1) + ".jpg\"}");
                 }
-                jpgPath.append("{\"jpgPath\":\"http://110.16.84.155:8090/customers/" + fnumber + "/" + "contract" + "/" + contractNo + "-" + (i+1) + ".jpg\"}");
             }
         }
         jpgPath.append("]");
