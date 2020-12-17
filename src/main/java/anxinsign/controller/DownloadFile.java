@@ -48,11 +48,14 @@ public class DownloadFile {
                     BufferedImage bufferedImage = renderer.renderImageWithDPI(i, 100);
                     ByteArrayOutputStream out = new ByteArrayOutputStream();
                     ImageIO.write(bufferedImage, "jpg", out);
-                    Files.write(Paths.get(filePath + "/" + contractNo + "-" + (i+1) + ".jpg"), out.toByteArray());
-                    if(i!=0) {
+                    if(i==0) {
+                        Files.write(Paths.get(filePath + "/" + contractNo + ".jpg"), out.toByteArray());
+                        jpgPath.append("{\"jpgPath\":\"http://110.16.84.155:8090/customers/" + fnumber + "/" + "contract" + "/" + contractNo + ".jpg\"}");
+                    }else {
+                        Files.write(Paths.get(filePath + "/" + contractNo + "-" + (i+1) + ".jpg"), out.toByteArray());
                     	jpgPath.append(",");
+                        jpgPath.append("{\"jpgPath\":\"http://110.16.84.155:8090/customers/" + fnumber + "/" + "contract" + "/" + contractNo + "-" + (i+1) + ".jpg\"}");
                     }
-                    jpgPath.append("{\"jpgPath\":\"http://110.16.84.155:8090/customers/" + fnumber + "/" + "contract" + "/" + contractNo + "-" + (i+1) + ".jpg\"}");
                 }
             }
         }
